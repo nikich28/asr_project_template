@@ -125,7 +125,7 @@ class BaseDataset(Dataset):
             _total = exceeds_text_length.sum()
             logger.info(
                 f"{_total} ({_total / initial_size:.1%}) records are longer then "
-                f"{max_audio_length} characters. Excluding them."
+                f"{max_text_length} characters. Excluding them."
             )
         else:
             exceeds_text_length = False
