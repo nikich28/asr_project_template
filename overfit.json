@@ -14,15 +14,16 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "BaselineModel",
+    "type": "GRU",
     "args": {
       "n_feats": 128,
-      "fc_hidden": 512
+      "hidden_size": 512,
+      "n_layers": 2
     }
   },
   "data": {
     "train": {
-      "batch_size": 20,
+      "batch_size": 64,
       "num_workers": 5,
       "datasets": [
         {
@@ -30,22 +31,7 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 200
-          }
-        }
-      ]
-    },
-    "val": {
-      "batch_size": 20,
-      "num_workers": 5,
-      "datasets": [
-        {
-          "type": "LibrispeechDataset",
-          "args": {
-            "part": "dev-clean",
-            "max_audio_length": 20.0,
-            "max_text_length": 200,
-            "limit": 20
+            "max_text_length": 300
           }
         }
       ]
@@ -93,7 +79,7 @@
     "monitor": "min val_loss",
     "early_stop": 100,
     "tensorboard": true,
-    "len_epoch": 100,
+    "len_epoch": 30,
     "grad_norm_clip": 10
   }
 }
