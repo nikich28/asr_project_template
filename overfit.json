@@ -1,5 +1,5 @@
 {
-  "name": "default_config",
+  "name": "overfit",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -14,16 +14,15 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "GRU",
+    "type": "SimpleGRU",
     "args": {
       "n_feats": 128,
-      "hidden_size": 512,
-      "n_layers": 2
+      "hidden_size": 512
     }
   },
   "data": {
     "train": {
-      "batch_size": 64,
+      "batch_size": 20,
       "num_workers": 5,
       "datasets": [
         {
@@ -31,14 +30,14 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 300
+            "max_text_length": 200
           }
         }
       ]
     }
   },
   "optimizer": {
-    "type": "SGD",
+    "type": "Adam",
     "args": {
       "lr": 3e-4
     }
@@ -78,7 +77,8 @@
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 100,
-    "tensorboard": true,
+    "visualize": "wandb",
+    "wandb_project": "asr_project",
     "len_epoch": 30,
     "grad_norm_clip": 10
   }

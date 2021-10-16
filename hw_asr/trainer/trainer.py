@@ -120,7 +120,7 @@ class Trainer(BaseTrainer):
                 self._log_predictions(part="train", **batch)
                 self._log_spectrogram(batch["spectrogram"])
                 self._log_scalars(self.train_metrics)
-            if batch_idx >= self.len_epoch:
+            if batch_idx > self.len_epoch:
                 break
         log = self.train_metrics.result()
 

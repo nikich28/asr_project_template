@@ -23,10 +23,10 @@ class BaselineModel(BaseModel):
         return input_lengths  # we don't reduce time dimension here
 
 
-class GRU(BaseModel):
+class SimpleGRU(BaseModel):
     def __init__(self, n_feats, n_class, n_layers=3, hidden_size=512, *args, **kwargs):
         super().__init__(n_feats, n_class, *args, **kwargs)
-        self.net = GRU(n_feats, hidden_size, n_layers, dropout=0.1, batch_first=True)
+        self.net = GRU(input_size=n_feats, hidden_size=hidden_size, num_layers=n_layers, dropout=0.1, batch_first=True)
         self.tail = Sequential(
             nn.ReLU(),
             nn.Linear(hidden_size, hidden_size // 2),
@@ -37,7 +37,7 @@ class GRU(BaseModel):
     def forward(self, spectrogram, *args, **kwargs):
         output, _ = self.net(spectrogram)
         output = self.tail(output)
-        return output
+        return {"logits": output}
 
     def transform_input_lengths(self, input_lengths):
         return input_lengths
