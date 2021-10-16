@@ -76,7 +76,6 @@ class Trainer(BaseTrainer):
                 self.model.parameters(), self.config["trainer"]["grad_norm_clip"]
             )
 
-
     def _train_epoch(self, epoch):
         """
         Training logic for an epoch
@@ -157,7 +156,6 @@ class Trainer(BaseTrainer):
             metrics.update(met.name, met(**batch))
         return batch
 
-
     def _valid_epoch(self, epoch):
         """
         Validate after training an epoch
@@ -210,13 +208,14 @@ class Trainer(BaseTrainer):
         # TODO: implement logging of beam search results
         if self.writer is None:
             return
-        predictions = log_probs.cpu().argmax(-1)
-        pred_texts = [self.text_encoder.ctc_decode(p) for p in predictions]
-        argmax_pred_texts = [
-            self.text_encoder.decode(p)[: int(l)]
-            for p, l in zip(predictions, log_probs_length)
+        argmax_inds = log_probs.cpu().argmax(-1)
+        argmax_inds = [
+            inds[: int(ind_len)]
+            for inds, ind_len in zip(argmax_inds, log_probs_length)
         ]
-        tuples = list(zip(pred_texts, text, argmax_pred_texts))
+        argmax_texts_raw = [self.text_encoder.decode(inds) for inds in argmax_inds]
+        argmax_texts = [self.text_encoder.ctc_decode(inds) for inds in argmax_inds]
+        tuples = list(zip(argmax_texts, text, argmax_texts_raw))
         shuffle(tuples)
         to_log_pred = []
         to_log_pred_raw = []

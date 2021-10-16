@@ -102,7 +102,6 @@ class BaseDataset(Dataset):
         if max_audio_length is not None:
             exceeds_audio_length = np.array(
                 [el['audio_len'] >= max_audio_length for el in index]
-                #[el for el in index if el["length"] <= max_audio_length]
             )
             _total = exceeds_audio_length.sum()
             logger.info(
@@ -115,11 +114,6 @@ class BaseDataset(Dataset):
         initial_size = len(index)
         if max_text_length is not None:
             exceeds_text_length = np.array(
-                # [
-                #     el
-                #     for el in index
-                #     if len(BaseTextEncoder.normalize_text(el["text"])) <= max_text_length
-                # ]
                 [len(BaseTextEncoder.normalize_text(el['text'])) >= max_text_length for el in index]
             )
             _total = exceeds_text_length.sum()
