@@ -1,5 +1,5 @@
 {
-  "name": "overfit",
+  "name": "main_pipeline",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -14,7 +14,7 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "SimpleGRU",
+    "type": "QuartzNet",
     "args": {
       "n_feats": 128,
       "size": 1
