@@ -10,8 +10,26 @@
     }
   },
   "augmentations": {
-    "wave": ["Vol", "Fade"],
-    "spectrogram": ["FrequencyMasking", "TimeMasking"]
+    "wave": [
+      {
+        "type": "Vol",
+        "args": {}
+      },
+      {
+        "type": "Fade",
+        "args": {}
+      }
+    ],
+    "spectrogram": [
+      {
+        "type": "FrequencyMasking",
+        "args": {}
+      },
+      {
+        "type": "TimeMasking",
+        "args": {}
+      }
+    ]
   },
   "arch": {
     "type": "QuartzNet",
