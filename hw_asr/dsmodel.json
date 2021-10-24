@@ -1,5 +1,5 @@
 {
-  "name": "main_pipeline",
+  "name": "ds_pipeline",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -35,7 +35,9 @@
     "type": "DSModel",
     "args": {
       "n_feats": 128,
-      "size": 1
+      "n_cnn_layers": 3,
+      "n_rnn_layers": 5,
+      "rnn_dim": 512
     }
   },
   "data": {

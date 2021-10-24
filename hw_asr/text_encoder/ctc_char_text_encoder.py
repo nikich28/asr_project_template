@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 import torch
-from pyctcdecode import build_ctcdecoder
+#from pyctcdecode import build_ctcdecoder
 
 from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
@@ -15,7 +15,7 @@ class CTCCharTextEncoder(CharTextEncoder):
         self.ind2char = {
             0: self.EMPTY_TOK
         }
-        self.decoder = build_ctcdecoder(alphabet)
+        #self.decoder = build_ctcdecoder([self.EMPTY_TOK] + alphabet)
         for text in alphabet:
             self.ind2char[max(self.ind2char.keys()) + 1] = text
         self.char2ind = {v: k for k, v in self.ind2char.items()}

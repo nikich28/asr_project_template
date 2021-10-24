@@ -67,8 +67,8 @@ class BidirectionalGRU(nn.Module):
 class DSModel(BaseModel):
     """Speech Recognition Model Inspired by DeepSpeech 2"""
 
-    def __init__(self, n_cnn_layers, n_rnn_layers, rnn_dim, n_class, n_feats, stride=2, dropout=0.1):
-        super(SpeechRecognitionModel, self).__init__()
+    def __init__(self, n_cnn_layers, n_rnn_layers, rnn_dim, n_class, n_feats, stride=2, dropout=0.1, *args, **kwargs):
+        super(DSModel, self).__init__(n_feats, n_class, *args, **kwargs)
         n_feats = n_feats // 2
         self.cnn = nn.Conv2d(1, 32, 3, stride=stride, padding=3 // 2)  # cnn for extracting heirachal features
 
@@ -90,7 +90,8 @@ class DSModel(BaseModel):
             nn.Linear(rnn_dim, n_class)
         )
 
-    def forward(self, x):
+    def forward(self, spectrogram, *args, **kwargs):
+        x = spectrogram.transpose(1, 2).unsqueeze(1)
         x = self.cnn(x)
         x = self.rescnn_layers(x)
         sizes = x.size()
@@ -99,7 +100,7 @@ class DSModel(BaseModel):
         x = self.fully_connected(x)
         x = self.birnn_layers(x)
         x = self.classifier(x)
-        return {"logits": x}
+        return {"logits": x.transpose(1, 2)}
 
     def transform_input_lengths(self, input_lengths):
-        return input_lengths # we don't reduce time dimension here
+        return input_lengths // 2 # we don't reduce time dimension here
