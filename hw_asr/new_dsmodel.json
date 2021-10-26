@@ -16,7 +16,16 @@
     }
   },
   "augmentations": {
-    "wave": [],
+    "wave": [
+      {
+        "type": "Gain",
+        "args": {}
+      },
+      {
+        "type": "PitchShift",
+        "args": {}
+      }
+    ],
     "spectrogram": [
       {
         "type": "FrequencyMasking",
@@ -87,7 +96,7 @@
   "optimizer": {
     "type": "AdamW",
     "args": {
-      "lr": 5e-4
+      "lr": 3e-4
     }
   },
   "loss": {
@@ -109,12 +118,9 @@
     }
   ],
   "lr_scheduler": {
-    "type": "OneCycleLR",
+    "type": "CosineAnnealingLR",
     "args": {
-      "steps_per_epoch": 300,
-      "epochs": 50,
-      "anneal_strategy": "linear",
-      "max_lr": 5e-4
+      "T_max": 5000
     }
   },
   "trainer": {
