@@ -1,3 +1,5 @@
+#adopted from https://www.assemblyai.com/blog/end-to-end-speech-recognition-pytorch/
+
 from torch import nn
 import torch.nn.functional as F
 from torch.nn import Sequential
