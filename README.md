@@ -39,7 +39,7 @@ I use 42 epoch checkpoint for testing. So you can do it in DataSphere:
 
 ```shell
 #!g1.1
-%%python3 ./asr_project_template/test.py -c ./asr_project_template/hw_asr/dsmodel.json -r ./asr_project_template/checkpoint-epoch42.pth
+%%python3 ./asr_project_template/test.py -c ./asr_project_template/hw_asr/dsmodel.json -r saved/models/ds_pipeline/1025_213219377295/checkpoint-epoch42.pth
 ```
 
 My best results on test data are:
