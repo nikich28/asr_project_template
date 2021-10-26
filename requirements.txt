@@ -4,6 +4,7 @@ numpy
 tqdm
 tensorboard
 matplotlib
+youtokentome
 
 pandas
 speechbrain~=0.5.9
@@ -13,4 +14,3 @@ torch_audiomentations
 editdistance
 wandb
 soundfile
-pyctcdecode

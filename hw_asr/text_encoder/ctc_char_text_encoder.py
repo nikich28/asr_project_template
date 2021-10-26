@@ -1,10 +1,9 @@
 from typing import List, Tuple
 
 import torch
-#from pyctcdecode import build_ctcdecoder
+from ctcdecode import CTCBeamDecoder
 
 from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
-
 
 
 class CTCCharTextEncoder(CharTextEncoder):
@@ -15,7 +14,6 @@ class CTCCharTextEncoder(CharTextEncoder):
         self.ind2char = {
             0: self.EMPTY_TOK
         }
-        #self.decoder = build_ctcdecoder([self.EMPTY_TOK] + alphabet)
         for text in alphabet:
             self.ind2char[max(self.ind2char.keys()) + 1] = text
         self.char2ind = {v: k for k, v in self.ind2char.items()}
@@ -42,7 +40,9 @@ class CTCCharTextEncoder(CharTextEncoder):
         assert voc_size == len(self.ind2char)
         hypos = []
         # TODO: your code here
-        beams = self.decoder.decode_beams(probs, beam_width=beam_size)
-        hypos = [(b[0], b[-2]) for b in beams]
+        decoder = CTCBeamDecoder(list(self.ind2char.values()), beam_width=beam_size)
+        beams, scores, _, lens = decoder.decode(probs.unsqueeze(0))
+        for i in range(beam_size):
+            hypos.append((self.ctc_decode(beams[0][i][:lens[0][i]]), scores[0][i].item()))
 
         return sorted(hypos, key=lambda x: x[1], reverse=True)

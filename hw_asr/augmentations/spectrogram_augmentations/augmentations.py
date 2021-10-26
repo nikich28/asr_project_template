@@ -8,7 +8,7 @@ from hw_asr.augmentations.base import AugmentationBase
 class FrequencyMasking(AugmentationBase):
     def __init__(self, frequency=15, *args, **kwargs):
         self.augm = transforms.FrequencyMasking(frequency)
-        self.p = 0.5
+        self.p = 1
 
     def __call__(self, data: Tensor):
         if random.random() < self.p:
@@ -20,7 +20,7 @@ class FrequencyMasking(AugmentationBase):
 class TimeMasking(AugmentationBase):
     def __init__(self, frequency=35, *args, **kwargs):
         self.augm = transforms.TimeMasking(frequency)
-        self.p = 0.5
+        self.p = 1
 
     def __call__(self, data: Tensor):
         if random.random() < self.p:

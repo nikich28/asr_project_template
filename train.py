@@ -13,6 +13,8 @@ from hw_asr.text_encoder.ctc_char_text_encoder import CTCCharTextEncoder
 from hw_asr.trainer import Trainer
 from hw_asr.utils import prepare_device
 from hw_asr.utils.parse_config import ConfigParser
+import hw_asr.text_encoder
+
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -28,7 +30,11 @@ def main(config):
     logger = config.get_logger("train")
 
     # text_encoder
-    text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+    if "text_encoder" in config:
+        text_encoder = getattr(hw_asr.text_encoder, config["text_encoder"]["type"]).get_simple_alphabet(
+            config["text_encoder"]["args"])
+    else:
+        text_encoder = CTCCharTextEncoder.get_simple_alphabet(None)
 
     # setup data_loader instances
     dataloaders = get_dataloaders(config, text_encoder)

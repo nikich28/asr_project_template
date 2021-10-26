@@ -100,7 +100,7 @@ class DSModel(BaseModel):
         x = self.fully_connected(x)
         x = self.birnn_layers(x)
         x = self.classifier(x)
-        return {"logits": x.transpose(1, 2)}
+        return {"logits": x}
 
     def transform_input_lengths(self, input_lengths):
         return input_lengths // 2 # we don't reduce time dimension here
