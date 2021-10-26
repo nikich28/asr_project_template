@@ -36,6 +36,7 @@ You should train this model for at least 42 epochs.
 ## Test my model
 
 I use 42 epoch checkpoint for testing. So you can do it in DataSphere:
+But should change the name of the checkpoint.
 
 ```shell
 #!g1.1
