@@ -5,6 +5,7 @@ tqdm
 tensorboard
 matplotlib
 youtokentome
+jiwer
 
 pandas
 speechbrain~=0.5.9
